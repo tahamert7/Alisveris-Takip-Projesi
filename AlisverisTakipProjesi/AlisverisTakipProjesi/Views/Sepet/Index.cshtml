@@ -1,0 +1,82 @@
+﻿@using AlisverisTakipProjesi.Models.ViewModel
+@model List<SepetViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="#" class="d-none"></a>
+
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>Ürün Adı</th>
+        <th>Ürün Açıklama</th>
+        <th>Fiyat</th>
+        <th>Adet</th>
+        <th>İşlemler</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @foreach (var urun in item.urun)
+            {
+                <td>@urun.urunAdi</td>
+                <td>@urun.aciklama</td>
+                <td>@urun.fiyat</td>
+                <td>
+                    <button class="btn btn-secondary adet-dusur" data-urun-id="@urun.urunID">-</button>
+                    <span>@item.sepet.Adet</span>
+                    <button class="btn btn-secondary adet-arttir" data-urun-id="@urun.urunID">+</button>
+                </td>
+                <td>
+                    <a class="btn btn-danger urun-sil" href="@Url.Action("Sil", "Sepet", new {id=urun.urunID})" >Sil</a>
+                </td>
+            }
+        </tr>
+    }
+    </table>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="totalFiyat" style="font-weight: bold; margin-bottom: 20px;">
+            Toplam Fiyat: @Model.Sum(x => x.sepet.TotalFiyat)
+        </div>
+        <a href="@Url.Action("Onayla", "Sepet", new {})" class="btn btn-danger">Onayla</a>
+    </div>
+</div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $('.adet-arttir').click(function () {
+                var urunId = $(this).data('urun-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AdetArttir", "Sepet")',
+                    data: { urunId: urunId },
+                    success: function (a) {
+                        if (a.success) {
+                            location.reload();
+                        }
+                    }
+                });
+            });
+
+            $('.adet-dusur').click(function () {
+                var urunId = $(this).data('urun-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AdetDusur", "Sepet")',
+                    data: { urunId: urunId },
+                    success: function (a) {
+                        if (a.success) {
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        });
+        </script>

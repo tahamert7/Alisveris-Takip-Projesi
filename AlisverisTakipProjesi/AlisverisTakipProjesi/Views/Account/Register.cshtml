@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <br />
+        <h2>Kayıt Ol</h2>
+
+        <div class="tox-form-group col-md-3 container">
+            <form method="post" action="/Account/Register">
+                <label>Ad</label>
+                <input type="text" name="ad" class="form-control" required />
+                <br />
+
+                <label>Soyad</label>
+                <input type="text" name="soyad" class="form-control" required />
+                <br />
+
+                <label>Kullanici Ad</label>
+                <input type="text" name="kullaniciAdi" class="form-control" required />
+                <br />
+
+                <label>Şifre</label>
+                <input type="password" name="sifre" class="form-control" required />
+                <br />
+
+                <button class="btn btn-secondary">Kayıt Ol</button>
+            </form>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-success">
+                    @ViewBag.Message
+                </div>
+            }
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Error
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

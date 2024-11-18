@@ -1,0 +1,40 @@
+﻿@using AlisverisTakipProjesi.Models
+@model List<Kategoriler>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="/Kategori/Ekle" class="btn btn-primary">Ekle</a>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Kategori ID</th>
+        <th>Ad</th>
+        <th>Açıklama</th>
+        @if (User.IsInRole("A"))
+        {
+            <th>Sil</th>
+            <th>Düzenle</th>
+        }
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.kategoriID</td>
+            <td>@item.kategoriAdi</td>
+            <td>@item.aciklama</td>
+
+            @if (User.IsInRole("A"))
+            {
+                <td>@Html.ActionLink("Sil", "Sil", new { id = item.kategoriID }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek İstediğinize Emin Misiniz ?')" })</td>
+                <td><a href="/Kategori/Guncelle/@item.kategoriID" class="btn btn-warning">Güncelle</a></td>
+            }
+
+        </tr>
+    }
+</table>
+

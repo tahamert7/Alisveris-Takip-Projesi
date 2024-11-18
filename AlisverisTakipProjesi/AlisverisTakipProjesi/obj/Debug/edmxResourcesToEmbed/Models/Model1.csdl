@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineStoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kategoriler">
+    <Key>
+      <PropertyRef Name="kategoriID" />
+    </Key>
+    <Property Name="kategoriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategoriAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Urunler" Relationship="OnlineStoreDBModel.FK_Urunler_Kategoriler" FromRole="Kategoriler" ToRole="Urunler" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="kullaniciID" />
+    </Key>
+    <Property Name="kullaniciID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="sifre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="rol" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Sepet" Relationship="OnlineStoreDBModel.FK_Sepet_Kullanicilar" FromRole="Kullanicilar" ToRole="Sepet" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UrunSatislari">
+    <Key>
+      <PropertyRef Name="satisID" />
+    </Key>
+    <Property Name="satisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunID" Type="Int32" Nullable="false" />
+    <Property Name="miktar" Type="Int32" />
+    <Property Name="toplamFiyat" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="musteriID" Type="Int32" />
+    <NavigationProperty Name="Urunler" Relationship="OnlineStoreDBModel.FK_UrunSatislari_Urunler" FromRole="UrunSatislari" ToRole="Urunler" />
+  </EntityType>
+  <EntityContainer Name="OnlineStoreDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategoriler" EntityType="Self.Kategoriler" />
+    <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="UrunSatislari" EntityType="Self.UrunSatislari" />
+    <EntitySet Name="Urunler" EntityType="OnlineStoreDBModel.Urunler" />
+    <AssociationSet Name="FK_Urunler_Kategoriler" Association="OnlineStoreDBModel.FK_Urunler_Kategoriler">
+      <End Role="Kategoriler" EntitySet="Kategoriler" />
+      <End Role="Urunler" EntitySet="Urunler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UrunSatislari_Urunler" Association="OnlineStoreDBModel.FK_UrunSatislari_Urunler">
+      <End Role="Urunler" EntitySet="Urunler" />
+      <End Role="UrunSatislari" EntitySet="UrunSatislari" />
+    </AssociationSet>
+    <EntitySet Name="Sepet" EntityType="OnlineStoreDBModel.Sepet" />
+    <AssociationSet Name="FK_Sepet_Kullanicilar" Association="OnlineStoreDBModel.FK_Sepet_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sepet_Urunler" Association="OnlineStoreDBModel.FK_Sepet_Urunler">
+      <End Role="Urunler" EntitySet="Urunler" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Urunler">
+    <Key>
+      <PropertyRef Name="urunID" />
+    </Key>
+    <Property Name="urunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunAdi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="fiyat" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="aciklama" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="stokMiktari" Type="Int32" />
+    <Property Name="kategoriID" Type="Int32" />
+    <Property Name="populer" Type="Boolean" />
+    <Property Name="stok" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kategoriler" Relationship="OnlineStoreDBModel.FK_Urunler_Kategoriler" FromRole="Urunler" ToRole="Kategoriler" />
+    <NavigationProperty Name="UrunSatislari" Relationship="OnlineStoreDBModel.FK_UrunSatislari_Urunler" FromRole="Urunler" ToRole="UrunSatislari" />
+    <Property Name="resim" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="durum" Type="Boolean" />
+    <NavigationProperty Name="Sepet" Relationship="OnlineStoreDBModel.FK_Sepet_Urunler" FromRole="Urunler" ToRole="Sepet" />
+  </EntityType>
+  <Association Name="FK_Urunler_Kategoriler">
+    <End Type="OnlineStoreDBModel.Kategoriler" Role="Kategoriler" Multiplicity="0..1" />
+    <End Type="OnlineStoreDBModel.Urunler" Role="Urunler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategoriler">
+        <PropertyRef Name="kategoriID" />
+      </Principal>
+      <Dependent Role="Urunler">
+        <PropertyRef Name="kategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UrunSatislari_Urunler">
+    <End Type="OnlineStoreDBModel.Urunler" Role="Urunler" Multiplicity="1" />
+    <End Type="OnlineStoreDBModel.UrunSatislari" Role="UrunSatislari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler">
+        <PropertyRef Name="urunID" />
+      </Principal>
+      <Dependent Role="UrunSatislari">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Sepet">
+    <Key>
+      <PropertyRef Name="Sepet1" />
+    </Key>
+    <Property Name="Sepet1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UrunID" Type="Int32" />
+    <Property Name="TotalFiyat" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Adet" Type="Int32" />
+    <Property Name="KullaniciID" Type="Int32" />
+    <NavigationProperty Name="Kullanicilar" Relationship="OnlineStoreDBModel.FK_Sepet_Kullanicilar" FromRole="Sepet" ToRole="Kullanicilar" />
+    <NavigationProperty Name="Urunler" Relationship="OnlineStoreDBModel.FK_Sepet_Urunler" FromRole="Sepet" ToRole="Urunler" />
+  </EntityType>
+  <Association Name="FK_Sepet_Kullanicilar">
+    <End Type="OnlineStoreDBModel.Kullanicilar" Role="Kullanicilar" Multiplicity="0..1" />
+    <End Type="OnlineStoreDBModel.Sepet" Role="Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="kullaniciID" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="KullaniciID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sepet_Urunler">
+    <End Type="OnlineStoreDBModel.Urunler" Role="Urunler" Multiplicity="0..1" />
+    <End Type="OnlineStoreDBModel.Sepet" Role="Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urunler">
+        <PropertyRef Name="urunID" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="UrunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

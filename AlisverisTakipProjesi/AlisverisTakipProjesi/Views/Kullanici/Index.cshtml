@@ -1,0 +1,39 @@
+﻿@using AlisverisTakipProjesi.Models
+@model List<Kullanicilar>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href="#" class="d-none"></a>
+
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>Kullanıcı ID</th>
+        <th>Kullanıcı Adı</th>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Şifre</th>
+        <th>Rol</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.kullaniciID</td>
+            <td>@item.kullaniciAdi</td>
+            <td>@item.ad</td>
+            <td>@item.soyad</td>
+            <td>@item.sifre</td>
+            <td>@item.rol</td>
+            <td>
+                <a class="btn btn-danger urun-sil" href="@Url.Action("Sil", "Kullanici", new {id=item.kullaniciID})">Sil</a>
+            </td>
+            <td>
+                <a class="btn btn-warning urun-sil" href="@Url.Action("Guncelle", "Kullanici", new {id=item.kullaniciID})">Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>

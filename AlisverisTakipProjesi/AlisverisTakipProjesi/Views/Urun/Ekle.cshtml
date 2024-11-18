@@ -1,0 +1,54 @@
+﻿@model AlisverisTakipProjesi.Models.Urunler
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Ekle", "Urun", FormMethod.Post, new { enctype = "multipart/Form-data" }))
+    {
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> Ad</label>
+                    <input type="text" name="urunAdi" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Aciklama</label>
+                    <input type="text" name="aciklama" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Fiyat</label>
+                    <input type="text" name="fiyat" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("resim", new { @class = "control-label col-md-2" })
+                    <input type="file" name="file" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label> Stok</label>
+                    <input type="text" name="stok" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("popüler", new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(x => x.populer)
+                </div>
+
+                <div class="form-group">
+                    <label> kategori</label>
+                    @Html.DropDownListFor(x => x.kategoriID, (List<SelectListItem>)ViewBag.ktgr, new { @class = "form-control" })
+                </div>
+                <button class="btn btn-primary">Ekle</button>
+                <a href="/Urunler/Index">Ürün Listesi</a>
+
+            </div>
+
+        </div>
+
+    </div>
+ }

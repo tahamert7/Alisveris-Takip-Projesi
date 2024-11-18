@@ -1,0 +1,78 @@
+﻿@using AlisverisTakipProjesi.Models
+@model List<Urunler>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    
+@*<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div style="width:35%;float:left">
+            @Html.TextBox("ara", null, new { @class = "form-control", @placeholer = "ürün adı ve açıklama arayınız" })
+            <div style=";float:left">
+               <input type="submit" name="btn" value="ara" class="btn btn-info" />
+            </div>
+
+        </div>
+    }
+</div>*@
+    <a href="/Urun/Ekle" class="btn btn-primary">Ekle</a>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Resim</th>
+            <th>Ad</th>
+            <th>Fiyat</th>
+            <th>Açıklama</th>
+            <th>Popüler</th>
+            <th>Stok</th>
+            <th>Kategori</th>
+            @if (User.IsInRole("A"))
+            {
+                <th>Sil</th>
+                <th>Düzenle</th>
+            }
+
+            @if (User.IsInRole("U"))
+            {
+                <th>Sepete Ekle</th>
+
+            }
+
+        </tr>
+
+            @foreach (var item in Model)
+            {
+             <tr>
+
+                 <td><img src="~/Content/Image/@item.resim" width="80" height="80" /></td>
+                 <td>@item.urunAdi</td>
+                 <td>@item.fiyat</td>
+                 <td>@item.aciklama</td>
+                 <td>
+                     @if (item.populer == true)
+                     {
+                         <label class="btn btn-success">Evet</label>
+                     }
+                     @if (item.populer == false)
+                     {
+                         <label class="btn btn-success">Hayır</label>
+                     }
+                 </td>
+                 <td>@item.stok</td>
+                 <td>@item.kategoriID</td>
+
+                 @if (User.IsInRole("A"))
+                 {
+                     <td>@Html.ActionLink("Sil", "Sil", new { id = item.urunID }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek İstediğinize Emin Misiniz ?')" })</td>
+                     <td><a href="/Urun/Guncelle/@item.urunID" class="btn btn-warning">Güncelle</a></td>
+                 }
+                 @if (User.IsInRole("U"))
+                 {
+                     <td><a href="/Urun/SepetEkle/@item.urunID" class="btn btn-success">Sepete Ekle</a></td>
+                 }
+                 </tr>
+                }
+    </table>
+
